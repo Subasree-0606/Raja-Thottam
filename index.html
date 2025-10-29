@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Raja Thottam - Your Green Haven for Plants, Seeds & Garden Essentials</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#1A5D1A',
+            secondary: '#2D7D32',
+            accent: '#D4A017',
+            beige: '#F5F5DC',
+            softwhite: '#F9FAF5',
+          },
+          fontFamily: {
+            playfair: ['Playfair Display', 'serif'],
+            poppins: ['Poppins', 'sans-serif'],
+          },
+          boxShadow: {
+            card: '0 4px 24px 0 rgba(34, 53, 42, .12)',
+          },
+        }
+      }
+    };
+  </script>
+  <!-- Heroicons CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" crossorigin="anonymous">
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Poppins', sans-serif; background: #F9FAF5; }
+    .font-logo { font-family: 'Playfair Display', serif; }
+    .scrollbar-hide::-webkit-scrollbar { display: none; }
+    .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+<body class="text-primary bg-softwhite overflow-x-hidden">
+
+  <!-- Sale Banner -->
+  <div class="w-full bg-accent text-center text-white py-2 text-sm font-semibold tracking-wide">
+    🌱 25% OFF All Indoor Plants – Limited Time!
+  </div>
+
+  <!-- Navbar -->
+  <nav id="navbar" class="fixed top-0 left-0 w-full z-30 backdrop-blur bg-white/85 shadow transition-all duration-200">
+    <div class="max-w-7xl mx-auto flex justify-between items-center py-4 px-5">
+      <!-- Logo and Name -->
+      <div class="flex items-center space-x-3">
+        <img src="https://img.icons8.com/emoji/48/000000/seedling-emoji.png" alt="Logo" class="w-8 h-8">
+        <span class="text-xl font-logo font-bold text-primary tracking-wider">Raja Thottam</span>
+      </div>
+      <!-- Desktop Menu -->
+      <ul class="hidden md:flex space-x-8 items-center font-semibold text-primary text-base">
+        <li><a href="#hero" class="hover:text-accent nav-link">Home</a></li>
+        <li class="relative group">
+          <button class="flex items-center hover:text-accent nav-link">Shop <i class="fa-solid fa-chevron-down ml-1 text-xs mt-[2px]"></i></button>
+          <!-- Dropdown -->
+          <ul class="absolute left-0 mt-2 bg-white shadow-lg rounded-md w-52 py-2 hidden group-hover:block group-focus:block">
+            <li><a href="#categories" class="block px-6 py-2 hover:bg-beige">Indoor Plants</a></li>
+            <li><a href="#categories" class="block px-6 py-2 hover:bg-beige">Outdoor Plants</a></li>
+            <li><a href="#categories" class="block px-6 py-2 hover:bg-beige">Seeds</a></li>
+            <li><a href="#categories" class="block px-6 py-2 hover:bg-beige">Pots & Planters</a></li>
+            <li><a href="#categories" class="block px-6 py-2 hover:bg-beige">Fertilizers</a></li>
+            <li><a href="#categories" class="block px-6 py-2 hover:bg-beige">Garden Tools</a></li>
+            <li><a href="#categories" class="block px-6 py-2 hover:bg-beige">Accessories</a></li>
+          </ul>
+        </li>
+        <li><a href="#why-shop" class="hover:text-accent nav-link">Plant Care</a></li>
+        <li><a href="#about" class="hover:text-accent nav-link">About</a></li>
+        <li><a href="#contact" class="hover:text-accent nav-link">Contact</a></li>
+        <li><a href="#blog" class="hover:text-accent nav-link">Blog</a></li>
+      </ul>
+      <!-- Cart & Hamburger -->
+      <div class="flex items-center space-x-5">
+        <button id="cart-btn" class="relative">
+          <i class="fa-solid fa-shopping-cart text-xl text-primary transition-transform hover:text-accent"></i>
+          <span id="cart-count" class="absolute -top-2 -right-2 bg-accent text-white w-5 h-5 flex items-center justify-center text-xs rounded-full">0</span>
+        </button>
+        <button id="menu-btn" class="md:hidden ml-2 focus:outline-none">
+          <i class="fa-solid fa-bars text-2xl text-primary"></i>
+        </button>
+      </div>
+    </div>
+    <!-- Mobile menu (hidden by default) -->
+    <div id="mobile-menu" class="md:hidden hidden flex-col w-full bg-white px-6 py-4 space-y-3 shadow-lg absolute">
+      <a href="#hero" class="py-2 block nav-link">Home</a>
+      <details>
+        <summary class="py-2 cursor-pointer select-none nav-link">Shop</summary>
+        <div class="pl-4 pb-2 space-y-2">
+          <a href="#categories">Indoor Plants</a>
+          <a href="#categories">Outdoor Plants</a>
+          <a href="#categories">Seeds</a>
+          <a href="#categories">Pots & Planters</a>
+          <a href="#categories">Fertilizers</a>
+          <a href="#categories">Garden Tools</a>
+          <a href="#categories">Accessories</a>
+        </div>
+      </details>
+      <a href="#why-shop" class="py-2 block nav-link">Plant Care</a>
+      <a href="#about" class="py-2 block nav-link">About</a>
+      <a href="#contact" class="py-2 block nav-link">Contact</a>
+      <a href="#blog" class="py-2 block nav-link">Blog</a>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section id="hero" class="relative min-h-screen flex items-center justify-center pt-24 pb-10 bg-gradient-to-b from-primary/70 to-transparent">
+    <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=cover&w=1200&q=80" alt="Garden Hero" class="absolute inset-0 w-full h-full object-cover object-center blur-sm scale-105 z-0">
+    <div class="absolute inset-0 bg-gradient-to-b from-[#1A5D1Aaa] to-transparent z-10"></div>
+    <div class="relative z-20 max-w-2xl mx-auto text-center text-white px-4">
+      <h1 class="font-logo text-5xl md:text-6xl font-bold mb-4 leading-tight">Discover Lush Greenery for Every Space</h1>
+      <p class="font-poppins text-lg md:text-xl mb-8 opacity-90">Indoor | Outdoor | Seeds | Pots | Tools</p>
+      <div class="flex justify-center gap-4">
+        <a href="#categories" class="bg-accent hover:bg-[#e2b13e] text-white font-semibold py-3 px-8 rounded-full text-lg shadow-lg transition-transform hover:scale-105">Shop Now</a>
+        <a href="#categories" class="border-white border-2 bg-transparent font-semibold py-3 px-8 rounded-full text-lg text-white hover:bg-white hover:text-primary hover:border-transparent transition">Explore Catalog</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trust Badges -->
+  <section class="w-full bg-beige py-6">
+    <div class="max-w-5xl mx-auto flex flex-wrap md:flex-nowrap items-center justify-center gap-8 text-primary">
+      <div class="flex flex-col items-center text-center">
+        <i class="fa-solid fa-seedling text-3xl text-accent mb-2"></i>
+        <div class="font-bold text-lg">5,000+ Happy Gardeners</div>
+      </div>
+      <div class="flex flex-col items-center text-center">
+        <i class="fa-solid fa-leaf text-3xl text-accent mb-2"></i>
+        <div class="font-bold text-lg">1,200+ Plant Varieties</div>
+      </div>
+      <div class="flex flex-col items-center text-center">
+        <i class="fa-solid fa-star text-3xl text-accent mb-2"></i>
+        <div class="font-bold text-lg">4.9★ Customer Rating</div>
+      </div>
+      <div class="flex flex-col items-center text-center">
+        <i class="fa-solid fa-leaf-heart text-3xl text-accent mb-2"></i>
+        <div class="font-bold text-lg">100% Organic Options</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Categories -->
+  <section id="categories" class="py-12 bg-softwhite">
+    <div class="max-w-7xl mx-auto px-5">
+      <h2 class="font-logo text-3xl md:text-4xl text-center font-bold text-primary mb-6">Featured Categories</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7 mt-7">
+        <!-- Category cards -->
+        <div class="bg-white shadow-card rounded-xl p-6 flex flex-col items-center text-center hover:scale-105 hover:shadow-xl hover:border-2 hover:border-primary transition cursor-pointer group">
+          <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80" alt="Indoor Plants" class="w-28 h-28 object-cover rounded-full mb-3 border-[3.5px] border-beige group-hover:border-primary transition">
+          <h3 class="font-logo text-xl font-bold mb-2">Indoor Plants</h3>
+          <button class="mt-2 bg-primary text-white py-2 px-6 rounded-full font-semibold hover:bg-secondary transition">Shop Now</button>
+        </div>
+        <div class="bg-white shadow-card rounded-xl p-6 flex flex-col items-center text-center hover:scale-105 hover:shadow-xl hover:border-2 hover:border-primary transition cursor-pointer group">
+          <img src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=400&q=80" alt="Outdoor Plants" class="w-28 h-28 object-cover rounded-full mb-3 border-[3.5px] border-beige group-hover:border-primary transition">
+          <h3 class="font-logo text-xl font-bold mb-2">Outdoor Plants</h3>
+          <button class="mt-2 bg-primary text-white py-2 px-6 rounded-full font-semibold hover:bg-secondary transition">Shop Now</button>
+        </div>
+        <div class="bg-white shadow-card rounded-xl p-6 flex flex-col items-center text-center hover:scale-105 hover:shadow-xl hover:border-2 hover:border-primary transition cursor-pointer group">
+          <img src="https://images.unsplash.com/photo-1508975556754-c425eee0b237?auto=format&fit=crop&w=400&q=80" alt="Seeds" class="w-28 h-28 object-cover rounded-full mb-3 border-[3.5px] border-beige group-hover:border-primary transition">
+          <h3 class="font-logo text-xl font-bold mb-2">Seeds</h3>
+          <button class="mt-2 bg-primary text-white py-2 px-6 rounded-full font-semibold hover:bg-secondary transition">Shop Now</button>
+        </div>
+        <div class="bg-white shadow-card rounded-xl p-6 flex flex-col items-center text-center hover:scale-105 hover:shadow-xl hover:border-2 hover:border-primary transition cursor-pointer group">
+          <img src="https://images.unsplash.com/photo-1476718406336-bb5a9690ee2a?auto=format&fit=crop&w=400&q=80" alt="Pots & Planters" class="w-28 h-28 object-cover rounded-full mb-3 border-[3.5px] border-beige group-hover:border-primary transition">
+          <h3 class="font-logo text-xl font-bold mb-2">Pots & Planters</h3>
+          <button class="mt-2 bg-primary text-white py-2 px-6 rounded-full font-semibold hover:bg-secondary transition">Shop Now</button>
+        </div>
+        <div class="bg-white shadow-card rounded-xl p-6 flex flex-col items-center text-center hover:scale-105 hover:shadow-xl hover:border-2 hover:border-primary transition cursor-pointer group">
+          <img src="https://images.unsplash.com/photo-1438109491414-7198515b166b?auto=format&fit=crop&w=400&q=80" alt="Fertilizers" class="w-28 h-28 object-cover rounded-full mb-3 border-[3.5px] border-beige group-hover:border-primary transition">
+          <h3 class="font-logo text-xl font-bold mb-2">Fertilizers</h3>
+          <button class="mt-2 bg-primary text-white py-2 px-6 rounded-full font-semibold hover:bg-secondary transition">Shop Now</button>
+        </div>
+        <div class="bg-white shadow-card rounded-xl p-6 flex flex-col items-center text-center hover:scale-105 hover:shadow-xl hover:border-2 hover:border-primary transition cursor-pointer group">
+          <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=400&q=80" alt="Garden Tools" class="w-28 h-28 object-cover rounded-full mb-3 border-[3.5px] border-beige group-hover:border-primary transition">
+          <h3 class="font-logo text-xl font-bold mb-2">Garden Tools</h3>
+          <button class="mt-2 bg-primary text-white py-2 px-6 rounded-full font-semibold hover:bg-secondary transition">Shop Now</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Best Sellers / Our Favorites -->
+  <section id="bestsellers" class="py-14 bg-beige">
+    <div class="max-w-7xl mx-auto px-5">
+      <div class="flex items-center justify-between mb-7">
+        <h2 class="font-logo text-3xl md:text-4xl text-primary font-bold">Our Best Sellers</h2>
+        <button class="hidden md:inline-block border border-accent text-accent rounded-full py-2 px-7 font-semibold hover:bg-accent hover:text-white transition">See All Products</button>
+      </div>
+      <div id="product-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-7">
+        <!-- Product cards, filled by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Shop with Raja Thottam -->
+  <section id="why-shop" class="py-12 bg-softwhite">
+    <div class="max-w-7xl mx-auto px-5">
+      <h2 class="font-logo text-center text-3xl md:text-4xl text-primary font-bold mb-7">Why Shop with Raja Thottam?</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-center mt-8">
+        <div class="bg-white rounded-xl px-7 py-8 shadow-card flex flex-col items-center">
+          <i class="fa-solid fa-truck-fast text-3xl mb-3 text-accent"></i>
+          <p class="font-bold mb-1">Free & Fast Delivery</p>
+          <p class="text-sm text-primary/90">All India covered</p>
+        </div>
+        <div class="bg-white rounded-xl px-7 py-8 shadow-card flex flex-col items-center">
+          <i class="fa-brands fa-whatsapp text-3xl mb-3 text-accent"></i>
+          <p class="font-bold mb-1">24/7 Plant Care Support</p>
+          <p class="text-sm text-primary/90">on WhatsApp</p>
+        </div>
+        <div class="bg-white rounded-xl px-7 py-8 shadow-card flex flex-col items-center">
+          <i class="fa-solid fa-shield-heart text-3xl mb-3 text-accent"></i>
+          <p class="font-bold mb-1">15-Day Healthy Plant Guarantee</p>
+          <p class="text-sm text-primary/90">on all plants</p>
+        </div>
+        <div class="bg-white rounded-xl px-7 py-8 shadow-card flex flex-col items-center">
+          <i class="fa-solid fa-lock text-3xl mb-3 text-accent"></i>
+          <p class="font-bold mb-1">Secure Payments</p>
+          <p class="text-sm text-primary/90">UPI, Cards, COD</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Customer Testimonials -->
+  <section id="testimonials" class="py-14 bg-beige">
+    <div class="max-w-5xl mx-auto px-5">
+      <h2 class="font-logo text-3xl md:text-4xl text-primary font-bold text-center mb-8">Our Happy Customers</h2>
+      <div id="testimonial-slider" class="relative overflow-hidden">
+        <div id="testimonial-cards" class="flex transition-all duration-700">
+          <!-- Slides inserted by JS -->
+        </div>
+        <!-- Slider dots -->
+        <div id="testimonial-dots" class="flex justify-center mt-6 space-x-3"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Blog Section -->
+  <section id="blog" class="py-12 bg-softwhite">
+    <div class="max-w-7xl mx-auto px-5">
+      <h2 class="font-logo text-3xl md:text-4xl font-bold text-primary text-center mb-8">From the GreenVibe Blog</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-7">
+        <div class="bg-white rounded-xl shadow-card p-5 flex flex-col justify-between">
+          <div>
+            <img src="https://images.unsplash.com/photo-1424746219973-8fe3bd07d8e3?auto=format&fit=crop&w=400&q=80" alt="Monsoon Planting" class="rounded-xl mb-4 h-40 w-full object-cover">
+            <h3 class="font-bold text-lg mb-1">Monsoon Planting Guide</h3>
+            <p class="text-sm text-primary/75 mb-4">Get the most from your garden during the rainy season with our expert planting advice!</p>
+          </div>
+          <button class="mt-auto border border-accent text-accent rounded-full font-semibold py-2 hover:bg-accent hover:text-white transition">Read More</button>
+        </div>
+        <div class="bg-white rounded-xl shadow-card p-5 flex flex-col justify-between">
+          <div>
+            <img src="https://images.unsplash.com/photo-1444392069727-6e16b8c8a8b9?auto=format&fit=crop&w=400&q=80" alt="Low Light Plants" class="rounded-xl mb-4 h-40 w-full object-cover">
+            <h3 class="font-bold text-lg mb-1">Best Indoor Plants for Low Light</h3>
+            <p class="text-sm text-primary/75 mb-4">Brighten up darker spaces with these top shade-loving indoor plants.</p>
+          </div>
+          <button class="mt-auto border border-accent text-accent rounded-full font-semibold py-2 hover:bg-accent hover:text-white transition">Read More</button>
+        </div>
+        <div class="bg-white rounded-xl shadow-card p-5 flex flex-col justify-between">
+          <div>
+            <img src="https://images.unsplash.com/photo-1502741338009-cac2772e18bc?auto=format&fit=crop&w=400&q=80" alt="Organic Fertilizer" class="rounded-xl mb-4 h-40 w-full object-cover">
+            <h3 class="font-bold text-lg mb-1">DIY Organic Fertilizer at Home</h3>
+            <p class="text-sm text-primary/75 mb-4">Learn how to make safe, effective fertilizer with common household items.</p>
+          </div>
+          <button class="mt-auto border border-accent text-accent rounded-full font-semibold py-2 hover:bg-accent hover:text-white transition">Read More</button>
+        </div>
+        <div class="bg-white rounded-xl shadow-card p-5 flex flex-col justify-between">
+          <div>
+            <img src="https://images.unsplash.com/photo-1511690743698-d9d85f2fbf38?auto=format&fit=crop&w=400&q=80" alt="Container Gardening" class="rounded-xl mb-4 h-40 w-full object-cover">
+            <h3 class="font-bold text-lg mb-1">Container Gardening for Beginners</h3>
+            <p class="text-sm text-primary/75 mb-4">Step-by-step tips for building your first lush balcony or terrace garden!</p>
+          </div>
+          <button class="mt-auto border border-accent text-accent rounded-full font-semibold py-2 hover:bg-accent hover:text-white transition">Read More</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter Signup -->
+  <section id="newsletter" class="py-12 bg-beige">
+    <div class="max-w-xl mx-auto px-6">
+      <div class="bg-white rounded-xl shadow-card p-8 flex flex-col items-center">
+        <h3 class="font-logo text-2xl md:text-3xl text-primary font-bold mb-2">Get the Green in Your Inbox</h3>
+        <p class="mb-5 text-primary/75 text-center">Sign up and get <span class="text-accent font-semibold">10% OFF</span> your first order!</p>
+        <form class="flex w-full max-w-sm gap-2" id="newsletter-form">
+          <input type="email" id="newsletter-email" required class="flex-1 border border-primary/30 rounded-l-full px-5 py-3 text-base focus:ring-2 focus:ring-accent outline-none" placeholder="Enter your email">
+          <button type="submit" class="bg-primary text-white px-8 py-3 rounded-r-full font-semibold hover:bg-secondary transition">Subscribe</button>
+        </form>
+        <span id="newsletter-msg" class="text-green-600 mt-3 hidden text-sm font-medium">Thank you for subscribing!</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-primary text-white py-10" id="about">
+    <div class="max-w-7xl mx-auto px-5 grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+      <div class="flex flex-col items-center md:items-start">
+        <div class="flex items-center space-x-2">
+          <img src="https://img.icons8.com/emoji/48/000000/seedling-emoji.png" alt="Logo" class="w-9 h-9">
+          <span class="font-logo text-2xl font-bold tracking-wider">Raja Thottam</span>
+        </div>
+        <span class="mt-2 opacity-80 text-base md:text-left text-center">Your Green Haven for Plants, Seeds & Garden Essentials</span>
+      </div>
+      <ul class="flex flex-col md:flex-row items-center justify-center gap-4 mt-6 md:mt-0">
+        <li><a href="#hero" class="hover:text-accent transition">Home</a></li>
+        <li><a href="#categories" class="hover:text-accent transition">Shop</a></li>
+        <li><a href="#about" class="hover:text-accent transition">About</a></li>
+        <li><a href="#contact" class="hover:text-accent transition">Contact</a></li>
+        <li><a href="#blog" class="hover:text-accent transition">Blog</a></li>
+      </ul>
+      <div class="flex flex-col items-center md:items-end space-y-3">
+        <div class="flex items-center space-x-3">
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram text-2xl hover:text-accent"></i></a>
+          <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp text-2xl hover:text-accent"></i></a>
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook text-2xl hover:text-accent"></i></a>
+        </div>
+        <div class="flex items-center space-x-3 mt-2">
+          <img src="https://img.icons8.com/color/32/000000/upi.png" alt="UPI" class="w-7">
+          <img src="https://img.icons8.com/color/32/000000/visa.png" alt="Visa" class="w-7">
+          <img src="https://img.icons8.com/color/32/000000/mastercard-logo.png" alt="Mastercard" class="w-7">
+          <img src="https://img.icons8.com/ios-filled/50/ffffff/cash-on-delivery.png" alt="COD" class="w-7 bg-gray-700 rounded-full">
+        </div>
+        <span class="text-xs mt-3">© 2025 Raja Thottam. All rights reserved.</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Cart Modal (hidden by default) -->
+  <div id="cart-modal" class="fixed inset-0 bg-black/40 z-[9999] hidden justify-end md:justify-center items-center">
+    <div class="bg-white rounded-lg shadow-xl w-full md:w-[32rem] max-h-[80vh] flex flex-col p-7 animate-fadeIn relative overflow-y-auto scrollbar-hide">
+      <button id="close-cart" class="absolute top-4 right-4 text-gray-400 hover:text-primary text-2xl"><i class="fa-solid fa-xmark"></i></button>
+      <h3 class="font-logo text-2xl font-bold mb-2 text-primary">Your Cart</h3>
+      <div id="cart-items" class="divide-y mt-2 mb-4"></div>
+      <div class="flex justify-between items-center pt-4 border-t font-semibold text-base">
+        <span>Subtotal</span>
+        <span id="cart-subtotal" class="text-xl text-accent font-bold">₹0</span>
+      </div>
+      <button class="bg-accent hover:bg-[#e2b13e] text-white rounded-full py-3 px-7 font-bold mt-6 transition-all">Checkout</button>
+    </div>
+  </div>
+
+  <!-- Product Quick View Modal -->
+  <div id="quickview-modal" class="fixed inset-0 bg-black/40 z-[9998] hidden justify-center items-center">
+    <div class="bg-white rounded-xl shadow-lg p-8 w-full md:w-[30rem] max-w-xl animate-fadeIn relative">
+      <button id="close-quickview" class="absolute top-4 right-4 text-gray-400 hover:text-primary text-2xl"><i class="fa-solid fa-xmark"></i></button>
+      <div id="quickview-content"></div>
+    </div>
+  </div>
+
+  <!-- Contact (invisible anchor, can expand if needed) -->
+  <span id="contact"></span>
+
+  <!-- Scripts: JS for all interactivity -->
+  <script>
+    // Smooth Scrolling & Active Nav Highlight
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        if(href && href.startsWith('#')) {
+          e.preventDefault();
+          const section = document.querySelector(href);
+          if(section) {
+            window.scrollTo({
+              top: section.offsetTop - 65,
+              behavior: 'smooth'
+            });
+          }
+        }
+      });
+    });
+    // Highlight Nav on Scroll
+    const sections = ['#hero', '#categories', '#bestsellers', '#why-shop', '#testimonials', '#blog', '#newsletter'];
+    const navLinks = document.querySelectorAll('.nav-link');
+    function highlightNav() {
+      let scroll = window.scrollY + 110;
+      let found = false;
+      for(let i=sections.length-1; i>=0; i--) {
+        const sec = document.querySelector(sections[i]);
+        if (sec && scroll >= sec.offsetTop) {
+          navLinks.forEach(l => l.classList.remove('text-accent'));
+          navLinks.forEach(l => {
+            if(l.getAttribute('href') === sections[i]) l.classList.add('text-accent');
+          });
+          found = true;
+          break;
+        }
+      }
+      if (!found) navLinks.forEach(l => l.classList.remove('text-accent'));
+    }
+    window.addEventListener('scroll', highlightNav);
+    document.addEventListener('DOMContentLoaded', highlightNav);
+
+    // Sticky Navbar shadow
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if(window.scrollY > 40) navbar.classList.add('shadow-lg');
+      else navbar.classList.remove('shadow-lg');
+    });
+
+    // Hamburger menu
+    const menuBtn = document.getElementById('menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    menuBtn.onclick = () => {
+      mobileMenu.classList.toggle('hidden');
+    };
+    // Hide on nav select
+    document.querySelectorAll('#mobile-menu a').forEach(link => link.addEventListener('click', () => {
+      mobileMenu.classList.add('hidden');
+    }));
+
+    // Dropdown hover for desktop
+    document.querySelectorAll('nav .group').forEach(g => {
+      g.addEventListener('mouseenter', () => {
+        const d = g.querySelector('ul');
+        if (d) d.classList.remove('hidden');
+      });
+      g.addEventListener('mouseleave', () => {
+        const d = g.querySelector('ul');
+        if (d) d.classList.add('hidden');
+      });
+    });
+
+    // Product data (Ideally from backend, for now static)
+    const PRODUCTS = [
+      {
+        id:1, name:'Money Plant', price:349, image:'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80',
+        rating:5, badge:'New', desc:'Low-maintenance, air-purifying indoor plant. Brings good luck and prosperity.', category:'Indoor Plants' },
+      { id:2, name:'Rose Seeds', price:99, image:'https://images.unsplash.com/photo-1438109491414-7198515b166b?auto=format&fit=crop&w=400&q=80', rating:4, badge:'', desc:'Grow beautiful, fragrant roses in your garden.', category:'Seeds'},
+      { id:3, name:'Areca Palm', price:499, image:'https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80', rating:5, badge:'Sale', desc:'Large graceful palm for air improvement. Pet friendly.', category:'Indoor Plants'},
+      { id:4, name:'Ceramic Pot', price:199, image:'https://images.unsplash.com/photo-1476718406336-bb5a9690ee2a?auto=format&fit=crop&w=400&q=80', rating:4, badge:'', desc:'Beautiful, durable glazed ceramic pot. 6-inch size.', category:'Pots & Planters'},
+      { id:5, name:'Organic Fertilizer', price:129, image:'https://images.unsplash.com/photo-1438109491414-7198515b166b?auto=format&fit=crop&w=400&q=80', rating:5, badge:'New', desc:'Pure, 100% organic fertilizer for all garden plants.', category:'Fertilizers'},
+      { id:6, name:'Garden Pruner', price:229, image:'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=400&q=80', rating:4, badge:'', desc:'Easy-to-use, high quality pruning shears.', category:'Garden Tools'},
+      { id:7, name:'Succulent Combo', price:599, image:'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80', rating:5, badge:'Sale', desc:'Set of 5 cute, easy-care succulents in mini pots.', category:'Indoor Plants'},
+      { id:8, name:'Pebble Pack', price:79, image:'https://images.unsplash.com/photo-1508975556754-c425eee0b237?auto=format&fit=crop&w=400&q=80', rating:4, badge:'', desc:'Decorative whole river pebbles for pots and planters.', category:'Accessories'},
+    ];
+
+    // Render Products
+    function renderProducts() {
+      const grid = document.getElementById('product-list');
+      grid.innerHTML = PRODUCTS.map(p => `
+        <div class="bg-white rounded-xl shadow-card p-5 flex flex-col hover:shadow-xl hover:scale-105 hover:border-2 hover:border-accent border-transparent transition group relative cursor-pointer" data-id="${p.id}">
+          <button class="absolute right-3 top-3 z-10 px-2 py-1 text-xs font-bold rounded bg-accent text-white shadow transition group-hover:scale-105 animate-fadeIn" style="display:${p.badge?'':'none'}">${p.badge}</button>
+          <img src="${p.image}" alt="${p.name}" class="w-full h-44 object-cover rounded-lg mb-4 bg-gray-100 group-hover:shadow-md transition">
+          <h4 class="font-logo font-semibold text-lg mb-1">${p.name}</h4>
+          <div class="flex items-center mb-2">
+            <span class="font-bold text-xl text-primary">₹${p.price}</span>
+            <span class="ml-auto flex text-accent">${'★'.repeat(p.rating)}${'☆'.repeat(5-p.rating)}</span>
+          </div>
+          <button class="bg-primary hover:bg-secondary text-white font-semibold rounded-full py-2 mt-2 transition add-to-cart">Add to Cart</button>
+        </div>`).join('');
+
+      // Hook up product quick view open
+      grid.querySelectorAll('.bg-white').forEach(card => {
+        card.addEventListener('click', function(e) {
+          if (!e.target.classList.contains('add-to-cart')) showQuickView(this.dataset.id);
+        });
+      });
+      grid.querySelectorAll('.add-to-cart').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          const id = this.closest('[data-id]').dataset.id;
+          addToCart(Number(id));
+        });
+      });
+    }
+    renderProducts();
+
+    // Cart functionality
+    let cart = JSON.parse(localStorage.getItem('cart_raja_thottam') || '{}');
+    function saveCart() { localStorage.setItem('cart_raja_thottam', JSON.stringify(cart)); }
+    function getCartCount() {
+      let count = 0;
+      Object.values(cart).forEach(c => count+=c.qty);
+      return count;
+    }
+    function updateCartCount() {
+      document.getElementById('cart-count').innerText = getCartCount();
+    }
+    updateCartCount();
+
+    function addToCart(id, qty=1) {
+      if (!cart[id]) cart[id] = { ...PRODUCTS.find(p=>p.id==id), qty: 0 };
+      cart[id].qty += qty;
+      saveCart();
+      updateCartCount();
+      openCart();
+      animateCartIcon();
+    }
+    function removeFromCart(id) {
+      delete cart[id];
+      saveCart();
+      updateCartCount();
+      renderCart();
+    }
+    function updateQty(id, qty) {
+      if (cart[id]) {
+        if (qty <= 0) removeFromCart(id);
+        else cart[id].qty = qty;
+      }
+      saveCart();
+      updateCartCount();
+      renderCart();
+    }
+    // Cart Modal Events
+    const cartBtn = document.getElementById('cart-btn'),
+      cartModal = document.getElementById('cart-modal'),
+      closeCart = document.getElementById('close-cart');
+    cartBtn.onclick = openCart;
+    closeCart.onclick = () => { cartModal.classList.add('hidden'); };
+    cartModal.onclick = function(e) { if (e.target === cartModal) cartModal.classList.add('hidden'); };
+    function openCart() {
+      renderCart();
+      cartModal.classList.remove('hidden');
+    }
+    function animateCartIcon() {
+      cartBtn.classList.add('animate-bounce');
+      setTimeout(()=>cartBtn.classList.remove('animate-bounce'), 500);
+    }
+    // Render cart modal contents
+    function renderCart() {
+      const cartItems = document.getElementById('cart-items');
+      const subtotal = document.getElementById('cart-subtotal');
+      let total = 0, out = '';
+      for (const id in cart) {
+        const item = cart[id];
+        total += item.price * item.qty;
+        out += `
+          <div class="flex items-center py-4">
+            <img src="${item.image}" alt="${item.name}" class="w-14 h-14 object-cover rounded border mr-4 bg-gray-50">
+            <div class="flex-1">
+              <div class="font-bold text-primary">${item.name}</div>
+              <div class="text-sm text-primary/70">₹${item.price} × 
+                <button class="mx-2 text-xl font-bold text-secondary decrease">-</button>
+                <span>${item.qty}</span>
+                <button class="mx-2 text-xl font-bold text-secondary increase">+</button>
+              </div>
+              <button class="text-xs font-bold text-red-500 mt-1 remove">Remove</button>
+            </div>
+            <div class="font-bold text-lg w-16 text-right">₹${item.price*item.qty}</div>
+          </div>
+        `;
+      }
+      cartItems.innerHTML = out || `<div class="text-center py-8 text-primary/60">Your cart is empty 🌿</div>`;
+      subtotal.innerText = `₹${total}`;
+      // Increase/decrease/remove events
+      cartItems.querySelectorAll('.decrease').forEach((btn,i) => {
+        btn.onclick = () => updateQty(Number(Object.keys(cart)[i]), cart[Object.keys(cart)[i]].qty - 1);
+      });
+      cartItems.querySelectorAll('.increase').forEach((btn,i) => {
+        btn.onclick = () => updateQty(Number(Object.keys(cart)[i]), cart[Object.keys(cart)[i]].qty + 1);
+      });
+      cartItems.querySelectorAll('.remove').forEach((btn,i) => {
+        btn.onclick = () => removeFromCart(Number(Object.keys(cart)[i]));
+      });
+    }
+    // Product Quick View Modal
+    const quickViewModal = document.getElementById('quickview-modal');
+    const quickViewContent = document.getElementById('quickview-content');
+    const closeQuickView = document.getElementById('close-quickview');
+    closeQuickView.onclick = ()=>quickViewModal.classList.add('hidden');
+    quickViewModal.onclick = function(e) { if (e.target === quickViewModal) quickViewModal.classList.add('hidden'); };
+    function showQuickView(id) {
+      const p = PRODUCTS.find(p=>p.id==id);
+      quickViewContent.innerHTML = `
+        <div class="flex flex-col md:flex-row gap-6">
+          <img src="${p.image}" class="md:w-52 w-full h-52 object-cover rounded-lg bg-gray-50 shadow" alt="${p.name}">
+          <div class="flex-1">
+            <span class="px-3 py-1 rounded-full bg-accent text-white text-xs font-bold inline-block mb-2" style="display:${p.badge?'':'none'}">${p.badge}</span>
+            <h3 class="font-logo text-2xl font-bold">${p.name}</h3>
+            <div class="my-1 font-semibold text-primary text-xl">₹${p.price}</div>
+            <div class="flex items-center text-accent mb-1">${'★'.repeat(p.rating)}${'☆'.repeat(5-p.rating)}</div>
+            <div class="mb-3 text-primary/80 text-base">${p.desc}</div>
+            ${p.category!=='Accessories' ? `<label class='block font-semibold mb-2'>Size/Variant:
+            <select id='quick-size' class='border rounded px-2 py-1 mt-1'>
+              <option>Standard</option><option>Large</option><option>Combo</option>
+            </select>
+            </label>` : ''}
+            <button class="bg-primary hover:bg-secondary text-white font-semibold rounded-full py-3 px-8 mt-3 transition w-full" onclick="addToCart(${p.id})">Add to Cart</button>
+          </div>
+        </div>
+      `;
+      quickViewModal.classList.remove('hidden');
+    }
+    // Make addToCart usable from quickview
+    window.addToCart = addToCart;
+
+    // Testimonials (static for now, can pull from API)
+    const TESTIMONIALS = [
+      {
+        name:'Vinod R.',
+        photo:'https://randomuser.me/api/portraits/men/32.jpg',
+        quote:'Fantastic range and super healthy plants! Delivery was quick, and the support team helped me with all my questions.',
+        rating:5
+      },
+      {
+        name:'Shruthi D.',
+        photo:'https://randomuser.me/api/portraits/women/44.jpg',
+        quote:'The quality of seeds and planters is top-notch. I always find something new for my home garden.',
+        rating:5
+      },
+      {
+        name:'Rahul K.',
+        photo:'https://randomuser.me/api/portraits/men/15.jpg',
+        quote:'Love the range and organic options. Their plant care guarantee really gave me peace of mind!',
+        rating:5
+      },
+    ];
+    let testimonialIndex = 0;
+    function renderTestimonials() {
+      const cards = document.getElementById('testimonial-cards');
+      cards.innerHTML = TESTIMONIALS.map(t=>`
+        <div class="w-[100%] md:w-[33.3%] flex-shrink-0 px-4 flex flex-col items-center text-center transition-opacity duration-700 ease-in-out">
+          <img src="${t.photo}" alt="${t.name}" class="w-20 h-20 rounded-full object-cover border-4 border-beige shadow mb-2">
+          <div class="font-bold text-lg mb-1 text-primary">${t.name}</div>
+          <div class="mb-2 text-accent flex justify-center">${'★'.repeat(t.rating)}</div>
+          <q class="text-primary/80 text-base font-medium">${t.quote}</q>
+        </div>
+      `).join('');
+      goToTestimonial(testimonialIndex, false);
+      // Dots
+      const dots = document.getElementById('testimonial-dots');
+      dots.innerHTML = TESTIMONIALS.map((_,i)=>`<button class="h-3 w-3 rounded-full mx-1 ${i===testimonialIndex?'bg-accent':'bg-[#d4a01744]'}" aria-label="View Review ${i+1}"></button>`).join('');
+      dots.querySelectorAll('button').forEach((b,i)=>b.onclick=()=>goToTestimonial(i));
+    }
+    function goToTestimonial(idx, auto=true) {
+      testimonialIndex = idx;
+      const cards = document.getElementById('testimonial-cards');
+      cards.style.transform = `translateX(-${testimonialIndex*100}%)`;
+      cards.style.width = `${TESTIMONIALS.length*100}%`;
+      if (auto) {
+        document.getElementById('testimonial-dots').querySelectorAll('button').forEach((b,i)=>{
+          b.className = `h-3 w-3 rounded-full mx-1 ${i===idx?'bg-accent':'bg-[#d4a01744]'}`;
+        });
+      }
+    }
+    let testimonialTimer = setInterval(()=>{
+      testimonialIndex = (testimonialIndex+1)%TESTIMONIALS.length;
+      goToTestimonial(testimonialIndex);
+    },5000);
+    renderTestimonials();
+
+    // Newsletter Signup
+    document.getElementById('newsletter-form').onsubmit = function(e){
+      e.preventDefault();
+      document.getElementById('newsletter-msg').classList.remove('hidden');
+      setTimeout(()=>document.getElementById('newsletter-msg').classList.add('hidden'),3500);
+      this.reset();
+    };
+
+    // Animations: fade-in on scroll
+    function fadeInOnScroll() {
+      document.querySelectorAll('section, .bg-white, .shadow-card').forEach(el => {
+        let rect = el.getBoundingClientRect(), winH = window.innerHeight;
+        if (rect.top < winH - 30) el.classList.add('opacity-100', 'translate-y-0');
+        else el.classList.remove('opacity-100', 'translate-y-0');
+      });
+    }
+    window.addEventListener('scroll', fadeInOnScroll);
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('section, .bg-white, .shadow-card').forEach(el => {
+        el.classList.add('opacity-0', 'translate-y-6', 'transition-all', 'duration-700');
+      });
+      setTimeout(fadeInOnScroll, 300);
+    });
+  </script>
+
+</body>
+</html>
