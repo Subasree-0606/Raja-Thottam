@@ -4,7 +4,7 @@
 
 ---
 
-![Hero Screenshot](./screenshot.png)
+![Website Screenshot](./Website%20screenshot.png)
 
 A modern, lush, and fully responsive single-page e-commerce website for a garden nursery. Clean design, seamless shopping, and top-notch usability—built with HTML5, Tailwind CSS, and vanilla JavaScript.
 
