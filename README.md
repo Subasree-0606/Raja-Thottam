@@ -71,7 +71,7 @@ A modern, lush, and fully responsive single-page e-commerce website for a garden
 ---
 
 ## 📷 Demo Screenshot
-> _Add a screenshot here to show off the beautiful UI!_
+![Website Screenshot](./Website%20screenshot.png)
 
 ---
 
