@@ -118,12 +118,30 @@
       <div class="max-w-7xl mx-auto px-5 py-12">
         <h1 class="font-logo text-4xl mb-8 text-primary">Shop</h1>
         <div class="mb-4 flex flex-col md:flex-row gap-3 md:items-center">
-          <input class="border rounded md:w-60 px-3 py-2 text-base" placeholder="Search products...">
-          <select class="border rounded md:w-48 px-3 py-2"><option>All Categories</option></select>
-          <select class="border rounded md:w-40 px-3 py-2"><option>Sort by</option><option>Price: Low-High</option><option>Price: High-Low</option></select>
+          <input id="shop-search" class="border rounded md:w-60 px-3 py-2 text-base" placeholder="Search products...">
+          <select id="shop-category" class="border rounded md:w-48 px-3 py-2">
+            <option value="">All Categories</option>
+            <option>Indoor Plants</option>
+            <option>Outdoor Plants</option>
+            <option>Seeds</option>
+            <option>Pots & Planters</option>
+            <option>Fertilizers</option>
+            <option>Garden Tools</option>
+            <option>Accessories</option>
+          </select>
+          <select id="shop-sort" class="border rounded md:w-40 px-3 py-2">
+            <option value="newest">Newest</option>
+            <option value="price_asc">Price: Low-High</option>
+            <option value="price_desc">Price: High-Low</option>
+          </select>
+          <button id="shop-apply" class="bg-primary text-white px-4 py-2 rounded-md font-semibold hover:bg-secondary">Apply</button>
         </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"><!-- Product cards will go here --></div>
-        <div class="flex justify-center mt-8"><!-- Pagination --></div>
+        <div id="shop-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"><!-- Product cards will go here --></div>
+        <div class="flex items-center justify-center gap-4 mt-8" id="shop-pager">
+          <button id="shop-prev" class="px-4 py-2 rounded border border-primary text-primary hover:bg-beige">Prev</button>
+          <span id="shop-page" class="font-semibold">1</span>
+          <button id="shop-next" class="px-4 py-2 rounded border border-primary text-primary hover:bg-beige">Next</button>
+        </div>
       </div>
     </section>
     <section id="page-product" class="page-section hidden">
@@ -155,29 +173,80 @@
       <div class="max-w-5xl mx-auto px-5 py-12">
         <h1 class="font-logo text-4xl text-primary mb-8">Plant Care Guides</h1>
         <div class="mb-6 flex flex-wrap gap-3">[Tags/filters]</div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">[Care guides list]</div>
+        <div id="guides-grid" class="grid grid-cols-1 md:grid-cols-2 gap-8"></div>
       </div>
     </section>
     <section id="page-care-guide-detail" class="page-section hidden">
       <div class="max-w-3xl mx-auto px-5 py-14">[Guide details go here]</div>
     </section>
     <section id="page-cart" class="page-section hidden">
-      <div class="max-w-3xl mx-auto px-5 py-14">[Shopping cart]</div>
+      <div class="max-w-3xl mx-auto px-5 py-14">
+        <h2 class="font-logo text-3xl mb-4">Your Cart</h2>
+        <div id="page-cart-items" class="divide-y"></div>
+        <div class="flex justify-between items-center mt-4 font-semibold">
+          <span>Subtotal</span>
+          <span id="page-cart-subtotal" class="text-accent text-xl">₹0</span>
+        </div>
+        <a href="#" id="goto-checkout" class="inline-block mt-6 bg-accent text-white px-6 py-3 rounded-full font-bold">Proceed to Checkout</a>
+      </div>
     </section>
     <section id="page-checkout" class="page-section hidden">
-      <div class="max-w-3xl mx-auto px-5 py-14">[Checkout form (address, payment)]</div>
+      <div class="max-w-3xl mx-auto px-5 py-14">
+        <h2 class="font-logo text-3xl mb-6">Checkout</h2>
+        <form id="checkout-form" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <input class="border rounded px-3 py-2" name="name" placeholder="Full Name" required>
+          <input class="border rounded px-3 py-2" name="phone" placeholder="Phone" required>
+          <input class="border rounded px-3 py-2 md:col-span-2" name="line1" placeholder="Address Line 1" required>
+          <input class="border rounded px-3 py-2 md:col-span-2" name="line2" placeholder="Address Line 2">
+          <input class="border rounded px-3 py-2" name="city" placeholder="City" required>
+          <input class="border rounded px-3 py-2" name="state" placeholder="State" required>
+          <input class="border rounded px-3 py-2" name="pincode" placeholder="Pincode" required>
+          <select class="border rounded px-3 py-2" name="paymentMethod">
+            <option value="COD">Cash on Delivery</option>
+          </select>
+          <button class="bg-primary text-white px-6 py-3 rounded-md font-semibold md:col-span-2">Place Order</button>
+        </form>
+        <div id="checkout-msg" class="mt-4 text-green-600 font-semibold hidden">Order placed!</div>
+      </div>
     </section>
     <section id="page-order-success" class="page-section hidden">
-      <div class="max-w-xl mx-auto px-5 py-20 text-center">[Order confirmation with order ID]</div>
+      <div class="max-w-xl mx-auto px-5 py-20 text-center">
+        <h2 class="font-logo text-3xl mb-3">Thank you for your order! 🌿</h2>
+        <p>Your order ID is <span id="order-id" class="font-bold"></span>.</p>
+      </div>
     </section>
     <section id="page-account" class="page-section hidden">
-      <div class="max-w-3xl mx-auto px-5 py-14">[Customer dashboard: orders, profile, wishlist]</div>
+      <div class="max-w-3xl mx-auto px-5 py-14">
+        <h2 class="font-logo text-3xl mb-4">My Account</h2>
+        <div id="account-info" class="mb-4">Not logged in.</div>
+        <div class="flex gap-3">
+          <button id="logout-btn" class="border px-4 py-2 rounded">Logout</button>
+        </div>
+      </div>
     </section>
     <section id="page-login" class="page-section hidden">
-      <div class="max-w-md mx-auto px-5 py-14">[Login form]</div>
+      <div class="max-w-md mx-auto px-5 py-14">
+        <h2 class="font-logo text-3xl mb-4">Login</h2>
+        <form id="login-form" class="space-y-3">
+          <input name="email" type="email" class="border rounded w-full px-3 py-2" placeholder="Email" required>
+          <input name="password" type="password" class="border rounded w-full px-3 py-2" placeholder="Password" required>
+          <button class="bg-primary text-white px-6 py-2 rounded">Login</button>
+        </form>
+        <p class="mt-3 text-sm">No account? <a href="#" id="goto-register" class="text-accent font-semibold">Register</a></p>
+        <div id="login-msg" class="text-red-600 mt-2 hidden">Login failed</div>
+      </div>
     </section>
     <section id="page-register" class="page-section hidden">
-      <div class="max-w-md mx-auto px-5 py-14">[Register form]</div>
+      <div class="max-w-md mx-auto px-5 py-14">
+        <h2 class="font-logo text-3xl mb-4">Register</h2>
+        <form id="register-form" class="space-y-3">
+          <input name="name" class="border rounded w-full px-3 py-2" placeholder="Name" required>
+          <input name="email" type="email" class="border rounded w-full px-3 py-2" placeholder="Email" required>
+          <input name="password" type="password" class="border rounded w-full px-3 py-2" placeholder="Password" required>
+          <button class="bg-primary text-white px-6 py-2 rounded">Create Account</button>
+        </form>
+        <div id="register-msg" class="text-green-600 mt-2 hidden">Account created! You can login now.</div>
+      </div>
     </section>
     <section id="page-forgot-password" class="page-section hidden">
       <div class="max-w-md mx-auto px-5 py-14">[Forgot password form]</div>
@@ -189,7 +258,18 @@
       <div class="max-w-7xl mx-auto px-5 py-12">[Search results]</div>
     </section>
     <section id="page-contact" class="page-section hidden">
-      <div class="max-w-2xl mx-auto px-5 py-14">[Contact form, map, store hours]</div>
+      <div class="max-w-3xl mx-auto px-5 py-14">
+        <h2 class="font-logo text-3xl mb-4">Contact & Visit Us</h2>
+        <div class="bg-white shadow-card rounded-xl p-6 space-y-3">
+          <p><span class="font-semibold">Prop:</span> T.Raja</p>
+          <p><span class="font-semibold">About:</span> All kind of Plants, Grass, Trees, Soil, Cowdunk, Red Sand, Pebbles for Sale</p>
+          <p><span class="font-semibold">Contact:</span> <a href="tel:+919444024629" class="text-accent font-semibold">9444024629</a></p>
+          <p><span class="font-semibold">Instagram:</span> <a class="text-accent font-semibold" href="https://www.instagram.com/raja_gardens?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener">@raja_gardens</a></p>
+          <p><span class="font-semibold">Location (Maps):</span> <a class="text-accent font-semibold" href="https://goo.gl/maps/mk4ZSWATd1Wi1odY8" target="_blank" rel="noopener">Open in Google Maps</a></p>
+          <p><span class="font-semibold">Address:</span> No.2/223 Chinnandikuppam, 1st Cross Street, Vettuvankeni, Chennai, India 600115</p>
+          <p class="text-primary/80">Please visit our garden for further enquiry.</p>
+        </div>
+      </div>
     </section>
   </main>
 
@@ -386,9 +466,9 @@
       </ul>
       <div class="flex flex-col items-center md:items-end space-y-3">
         <div class="flex items-center space-x-3">
-          <a href="#" aria-label="Instagram"><i class="fab fa-instagram text-2xl hover:text-accent"></i></a>
+          <a href="https://www.instagram.com/raja_gardens?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram text-2xl hover:text-accent"></i></a>
           <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp text-2xl hover:text-accent"></i></a>
-          <a href="#" aria-label="Facebook"><i class="fab fa-facebook text-2xl hover:text-accent"></i></a>
+          <a href="https://goo.gl/maps/mk4ZSWATd1Wi1odY8" target="_blank" rel="noopener" aria-label="Location"><i class="fa-solid fa-location-dot text-2xl hover:text-accent"></i></a>
         </div>
         <div class="flex items-center space-x-3 mt-2">
           <img src="https://img.icons8.com/color/32/000000/upi.png" alt="UPI" class="w-7">
@@ -558,6 +638,8 @@
 
     // Cart functionality
     let cart = JSON.parse(localStorage.getItem('cart_raja_thottam') || '{}');
+    function getToken(){ return localStorage.getItem('rt_token') || ''; }
+    function setToken(t){ localStorage.setItem('rt_token', t); }
     function saveCart() { localStorage.setItem('cart_raja_thottam', JSON.stringify(cart)); }
     function getCartCount() {
       let count = 0;
@@ -752,6 +834,126 @@
         el.classList.add('opacity-0', 'translate-y-6', 'transition-all', 'duration-700');
       });
       setTimeout(fadeInOnScroll, 300);
+    });
+
+    // Shop page rendering (filters/search/sort/pagination)
+    let currentShopPage = 1, currentTotalPages = 1;
+    async function renderShop(page=1){
+      await loadProducts();
+      const q = document.getElementById('shop-search').value.trim();
+      const category = document.getElementById('shop-category').value;
+      const sort = document.getElementById('shop-sort').value;
+      try {
+        const params = new URLSearchParams({ q, category, sort, page, limit: 12 });
+        const res = await fetch(`${BASE_API}/api/products?${params.toString()}`);
+        const json = await res.json();
+        const list = json.data || json;
+        currentShopPage = json.page || 1;
+        currentTotalPages = json.totalPages || 1;
+        const grid = document.getElementById('shop-grid');
+        grid.innerHTML = (list || []).map(p=>`
+          <div class="bg-white rounded-xl shadow-card p-5 flex flex-col hover:shadow-xl hover:scale-105 hover:border-2 hover:border-accent border-transparent transition group relative cursor-pointer" data-id="${p._id || ''}" data-slug="${p.slug || ''}">
+            <img src="${p.image}" alt="${p.name}" class="w-full h-44 object-cover rounded-lg mb-4 bg-gray-100">
+            <h4 class="font-logo font-semibold text-lg mb-1">${p.name}</h4>
+            <div class="flex items-center mb-2"><span class="font-bold text-xl text-primary">₹${p.price}</span></div>
+            <button class="bg-primary hover:bg-secondary text-white font-semibold rounded-full py-2 mt-2 transition">Add to Cart</button>
+          </div>`).join('');
+        document.getElementById('shop-page').innerText = `${currentShopPage} / ${currentTotalPages}`;
+        grid.querySelectorAll('button').forEach((btn,i)=>{
+          btn.onclick=()=>{
+            const card = btn.closest('[data-id]');
+            const id = PRODUCTS.find(pp=>pp.slug===card.dataset.slug)?.id || PRODUCTS[i]?.id;
+            if(id) addToCart(id);
+          };
+        });
+      } catch(e){ /* ignore */ }
+    }
+    document.getElementById('shop-apply').onclick = ()=>renderShop(1);
+    document.getElementById('shop-prev').onclick = ()=>{ if(currentShopPage>1) renderShop(currentShopPage-1); };
+    document.getElementById('shop-next').onclick = ()=>{ if(currentShopPage<currentTotalPages) renderShop(currentShopPage+1); };
+
+    // Care Guides list
+    async function renderGuides(){
+      try{
+        const res = await fetch(`${BASE_API}/api/guides`);
+        const guides = await res.json();
+        const grid = document.getElementById('guides-grid');
+        grid.innerHTML = guides.map(g=>`
+          <article class="bg-white rounded-xl shadow-card p-5">
+            <img src="${g.image||''}" class="rounded-lg h-44 w-full object-cover mb-3" alt="${g.title}">
+            <h3 class="font-bold text-lg mb-1">${g.title}</h3>
+            <p class="text-sm text-primary/75 mb-3">${g.summary||''}</p>
+            <a class="text-accent font-semibold" href="#">Read More</a>
+          </article>
+        `).join('');
+      }catch(e){/* ignore */}
+    }
+
+    // Account: login/register/me
+    async function fetchMe(){
+      const token = getToken();
+      if(!token){ document.getElementById('account-info').innerText = 'Not logged in.'; return; }
+      try{
+        const res = await fetch(`${BASE_API}/api/auth/me`,{ headers:{ Authorization:`Bearer ${token}` }});
+        const json = await res.json();
+        if(json.user){ document.getElementById('account-info').innerText = `Logged in as ${json.user.name} (${json.user.email})`; }
+      }catch(e){ document.getElementById('account-info').innerText = 'Not logged in.'; }
+    }
+    document.getElementById('logout-btn').onclick = ()=>{ setToken(''); fetchMe(); };
+    document.getElementById('goto-register')?.addEventListener('click', (e)=>{ e.preventDefault(); window.scrollTo({top:0,behavior:'smooth'}); });
+    document.getElementById('login-form').onsubmit = async function(e){
+      e.preventDefault();
+      const fd = new FormData(this);
+      try{
+        const res = await fetch(`${BASE_API}/api/auth/login`,{ method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(Object.fromEntries(fd))});
+        const json = await res.json();
+        if(json.token){ setToken(json.token); document.getElementById('login-msg').classList.add('hidden'); fetchMe(); alert('Logged in!'); }
+        else document.getElementById('login-msg').classList.remove('hidden');
+      }catch(err){ document.getElementById('login-msg').classList.remove('hidden'); }
+    };
+    document.getElementById('register-form').onsubmit = async function(e){
+      e.preventDefault();
+      const fd = new FormData(this);
+      try{
+        const res = await fetch(`${BASE_API}/api/auth/register`,{ method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(Object.fromEntries(fd))});
+        if(res.ok){ document.getElementById('register-msg').classList.remove('hidden'); setTimeout(()=>document.getElementById('register-msg').classList.add('hidden'), 3000); }
+      }catch(err){}
+    };
+
+    // Page Cart rendering + goto checkout
+    function renderPageCart(){
+      const wrap = document.getElementById('page-cart-items');
+      let total = 0; let out = '';
+      for(const id in cart){ const it = cart[id]; total += it.price*it.qty; out += `<div class="py-3 flex justify-between"><span>${it.name} × ${it.qty}</span><span>₹${it.price*it.qty}</span></div>`; }
+      wrap.innerHTML = out || '<div class="text-primary/60 py-6">Your cart is empty</div>';
+      document.getElementById('page-cart-subtotal').innerText = `₹${total}`;
+    }
+    document.getElementById('goto-checkout').onclick = (e)=>{ e.preventDefault(); renderPageCart(); window.scrollTo({top:0,behavior:'smooth'}); };
+
+    // Checkout form -> create order
+    document.getElementById('checkout-form').onsubmit = async function(e){
+      e.preventDefault();
+      const token = getToken();
+      if(!token){ alert('Please login to place order.'); return; }
+      const address = Object.fromEntries(new FormData(this));
+      const items = Object.values(cart).map(i=>({ product: i.id || i._id, qty: i.qty }));
+      try{
+        const res = await fetch(`${BASE_API}/api/orders`,{ method:'POST', headers:{ 'Content-Type':'application/json', Authorization:`Bearer ${token}` }, body: JSON.stringify({ items, address, paymentMethod: address.paymentMethod||'COD' }) });
+        const json = await res.json();
+        if(json.orderId){ showOrderSuccess(json.orderId); cart = {}; saveCart(); updateCartCount(); renderPageCart(); }
+      }catch(err){ alert('Order failed.'); }
+    };
+    function showOrderSuccess(id){
+      document.getElementById('order-id').innerText = id;
+      document.getElementById('page-order-success').classList.remove('hidden');
+      window.scrollTo({ top: document.getElementById('page-order-success').offsetTop - 70, behavior:'smooth' });
+    }
+
+    // Initialize some renders on load
+    document.addEventListener('DOMContentLoaded', ()=>{
+      renderShop(1);
+      renderGuides();
+      fetchMe();
     });
   </script>
 
