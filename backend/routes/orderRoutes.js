@@ -44,4 +44,10 @@ router.get('/:id', auth, async (req, res) => {
   res.json(order);
 });
 
+// GET /api/my/orders - list my orders
+router.get('/my', auth, async (req, res) => {
+  const orders = await Order.find({ user: req.userId }).sort({ createdAt: -1 });
+  res.json(orders);
+});
+
 module.exports = router;

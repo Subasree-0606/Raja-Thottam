@@ -955,6 +955,78 @@
       renderGuides();
       fetchMe();
     });
+
+    // Simple hash-based router for SPA
+    const ROUTES = {
+      '': 'page-home',
+      '#/': 'page-home',
+      '#/home': 'page-home',
+      '#/shop': 'page-shop',
+      '#/cart': 'page-cart',
+      '#/checkout': 'page-checkout',
+      '#/account': 'page-account',
+      '#/login': 'page-login',
+      '#/register': 'page-register',
+      '#/care-guides': 'page-care-guides',
+      '#/contact': 'page-contact',
+    };
+    function hideAllPages(){ document.querySelectorAll('.page-section').forEach(s=>s.classList.add('hidden')); }
+    async function router(){
+      const hash = location.hash || '#/';
+      // special routes
+      if (hash.startsWith('#/product/')) {
+        const slug = decodeURIComponent(hash.replace('#/product/',''));
+        await loadProducts();
+        const p = PRODUCTS.find(pp=>pp.slug===slug);
+        if (p){
+          hideAllPages();
+          const sec = document.getElementById('page-product');
+          sec.classList.remove('hidden');
+          sec.querySelector('h2').innerText = p.name;
+          sec.querySelector('.text-xl').innerText = `₹${p.price}`;
+          sec.querySelector('.mb-2').innerText = p.desc;
+        }
+        window.scrollTo({top:0,behavior:'smooth'});
+        return;
+      }
+      if (hash.startsWith('#/order-success/')) {
+        const id = decodeURIComponent(hash.replace('#/order-success/',''));
+        hideAllPages();
+        document.getElementById('order-id').innerText = id;
+        document.getElementById('page-order-success').classList.remove('hidden');
+        window.scrollTo({top:0,behavior:'smooth'});
+        return;
+      }
+      // generic routes
+      const pageId = ROUTES[hash] || 'page-home';
+      hideAllPages();
+      document.getElementById(pageId).classList.remove('hidden');
+      // page hooks
+      if (pageId==='page-shop') renderShop(1);
+      if (pageId==='page-cart') renderPageCart();
+      if (pageId==='page-care-guides') renderGuides();
+      if (pageId==='page-account') { fetchMe(); renderMyOrders(); }
+      window.scrollTo({top:0,behavior:'smooth'});
+    }
+    window.addEventListener('hashchange', router);
+    document.addEventListener('DOMContentLoaded', router);
+
+    // Account orders list
+    async function renderMyOrders(){
+      const token = getToken();
+      const wrap = document.getElementById('account-info');
+      if(!token){ wrap.innerText = 'Not logged in.'; return; }
+      try{
+        const res = await fetch(`${BASE_API}/api/orders/my`, { headers:{ Authorization:`Bearer ${token}` }});
+        const orders = await res.json();
+        const html = [wrap.innerText, '<div class="mt-4">Recent Orders:</div>',
+          '<div class="mt-2 space-y-2">',
+          ...orders.map(o=>`<div class=\"bg-white rounded shadow p-3\">#${o._id} • ₹${o.total} • ${new Date(o.createdAt).toLocaleString()}</div>`),
+          '</div>'
+        ].join('');
+        wrap.innerHTML = html;
+      }catch(e){ /* ignore */ }
+    }
   </script>
 
 </body>
