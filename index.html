@@ -277,6 +277,45 @@
         </div>
       </div>
     </section>
+    <section id="page-admin-login" class="page-section hidden">
+      <div class="max-w-md mx-auto px-5 py-14">
+        <h2 class="font-logo text-3xl mb-4">Admin Login</h2>
+        <form id="admin-login-form" class="space-y-3">
+          <input name="email" type="email" class="border rounded w-full px-3 py-2" placeholder="Admin Email" required>
+          <input name="password" type="password" class="border rounded w-full px-3 py-2" placeholder="Password" required>
+          <button class="bg-primary text-white px-6 py-2 rounded">Login</button>
+        </form>
+        <div id="admin-login-msg" class="text-red-600 mt-2 hidden">Login failed</div>
+      </div>
+    </section>
+    <section id="page-admin-dashboard" class="page-section hidden">
+      <div class="max-w-6xl mx-auto px-5 py-14">
+        <h2 class="font-logo text-3xl mb-6">Admin Dashboard</h2>
+        <div class="grid md:grid-cols-3 gap-4">
+          <div class="bg-white rounded shadow p-4"><div class="font-semibold">Orders</div><div id="admin-orders-stat" class="text-2xl">—</div></div>
+          <div class="bg-white rounded shadow p-4"><div class="font-semibold">Products</div><div id="admin-products-stat" class="text-2xl">—</div></div>
+          <div class="bg-white rounded shadow p-4"><div class="font-semibold">Low Stock</div><div id="admin-lowstock-stat" class="text-2xl">—</div></div>
+        </div>
+      </div>
+    </section>
+    <section id="page-admin-products" class="page-section hidden">
+      <div class="max-w-6xl mx-auto px-5 py-14">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="font-logo text-3xl">Manage Products</h2>
+          <button id="admin-refresh-products" class="border px-4 py-2 rounded">Refresh</button>
+        </div>
+        <form id="admin-create-product" class="grid md:grid-cols-2 gap-3 bg-white rounded shadow p-4 mb-6">
+          <input name="name" class="border rounded px-3 py-2" placeholder="Name" required>
+          <input name="slug" class="border rounded px-3 py-2" placeholder="Slug" required>
+          <input name="price" type="number" class="border rounded px-3 py-2" placeholder="Price" required>
+          <input name="image" class="border rounded px-3 py-2" placeholder="Image URL">
+          <input name="categories" class="border rounded px-3 py-2 md:col-span-2" placeholder="Categories (comma separated)">
+          <textarea name="description" class="border rounded px-3 py-2 md:col-span-2" placeholder="Description"></textarea>
+          <button class="bg-primary text-white px-6 py-2 rounded md:col-span-2">Create Product</button>
+        </form>
+        <div id="admin-products-table" class="bg-white rounded shadow p-4 overflow-x-auto text-sm"></div>
+      </div>
+    </section>
   </main>
 
   <!-- Trust Badges -->
@@ -999,6 +1038,9 @@
       '#/register': 'page-register',
       '#/care-guides': 'page-care-guides',
       '#/contact': 'page-contact',
+      '#/admin/login': 'page-admin-login',
+      '#/admin': 'page-admin-dashboard',
+      '#/admin/products': 'page-admin-products',
     };
     function hideAllPages(){ document.querySelectorAll('.page-section').forEach(s=>s.classList.add('hidden')); }
     async function router(){
@@ -1042,6 +1084,8 @@
       if (pageId==='page-care-guides') renderGuides();
       if (pageId==='page-account') { fetchMe(); renderMyOrders(); renderWishlistInAccount(); }
       if (pageId==='page-checkout') { if(!getToken()){ alert('Please login to checkout.'); location.hash = '#/login'; return; } }
+      if (pageId==='page-admin-dashboard') { if(!(await ensureAdmin())) return; adminLoadStats(); }
+      if (pageId==='page-admin-products') { if(!(await ensureAdmin())) return; adminLoadProducts(); }
       window.scrollTo({top:0,behavior:'smooth'});
     }
     window.addEventListener('hashchange', router);
@@ -1081,6 +1125,70 @@
       const firstLine = existing.split('<div class="mt-4">')[0];
       wrap.innerHTML = firstLine + block;
     }
+
+    // Admin helpers
+    async function ensureAdmin(){
+      const token = getToken();
+      if(!token){ location.hash = '#/admin/login'; return false; }
+      try{
+        const res = await fetch(`${BASE_API}/api/auth/me`,{ headers:{ Authorization:`Bearer ${token}` }});
+        const json = await res.json();
+        if(json.user && json.user.email){ return true; }
+      }catch(e){}
+      location.hash = '#/admin/login';
+      return false;
+    }
+    document.getElementById('admin-login-form').onsubmit = async function(e){
+      e.preventDefault();
+      const fd = new FormData(this);
+      try{
+        const res = await fetch(`${BASE_API}/api/auth/login`,{ method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(Object.fromEntries(fd))});
+        const json = await res.json();
+        if(json.token){ setToken(json.token); document.getElementById('admin-login-msg').classList.add('hidden'); location.hash = '#/admin'; }
+        else document.getElementById('admin-login-msg').classList.remove('hidden');
+      }catch(err){ document.getElementById('admin-login-msg').classList.remove('hidden'); }
+    };
+    async function adminLoadStats(){
+      try{
+        const token = getToken();
+        const [prodsRes, ordersRes] = await Promise.all([
+          fetch(`${BASE_API}/api/admin/products`,{ headers:{Authorization:`Bearer ${token}`}}),
+          fetch(`${BASE_API}/api/orders/my`,{ headers:{Authorization:`Bearer ${token}`}})
+        ]);
+        const prods = await prodsRes.json();
+        const orders = await ordersRes.json();
+        document.getElementById('admin-products-stat').innerText = prods.length||0;
+        document.getElementById('admin-orders-stat').innerText = orders.length||0;
+        const low = (prods||[]).filter(p=>p.stock<=5).length;
+        document.getElementById('admin-lowstock-stat').innerText = low;
+      }catch(e){}
+    }
+    async function adminLoadProducts(){
+      const token = getToken();
+      try{
+        const res = await fetch(`${BASE_API}/api/admin/products`,{ headers:{Authorization:`Bearer ${token}`}});
+        const items = await res.json();
+        const wrap = document.getElementById('admin-products-table');
+        wrap.innerHTML = `<table class=\"min-w-full\"><thead><tr><th class=\"text-left p-2\">Name</th><th class=\"text-left p-2\">Price</th><th class=\"text-left p-2\">Stock</th><th class=\"text-left p-2\">Actions</th></tr></thead><tbody>${(items||[]).map(p=>`<tr class=\\"border-t\\"><td class=\\"p-2\\">${p.name}</td><td class=\\"p-2\\">₹${p.price}</td><td class=\\"p-2\\">${p.stock||0}</td><td class=\\"p-2\\"><button data-id=\\"${p._id}\\" class=\\"text-red-600 admin-del\\">Delete</button></td></tr>`).join('')}</tbody></table>`;
+        wrap.querySelectorAll('.admin-del').forEach(btn=>{
+          btn.onclick = async ()=>{
+            if(!confirm('Delete product?')) return;
+            await fetch(`${BASE_API}/api/admin/products/${btn.dataset.id}`,{ method:'DELETE', headers:{Authorization:`Bearer ${token}`}});
+            adminLoadProducts();
+          }
+        });
+      }catch(e){}
+    }
+    document.getElementById('admin-refresh-products').onclick = adminLoadProducts;
+    document.getElementById('admin-create-product').onsubmit = async function(e){
+      e.preventDefault();
+      const token = getToken();
+      const data = Object.fromEntries(new FormData(this));
+      data.categories = (data.categories||'').split(',').map(s=>s.trim()).filter(Boolean);
+      data.price = Number(data.price);
+      const res = await fetch(`${BASE_API}/api/admin/products`,{ method:'POST', headers:{ 'Content-Type':'application/json', Authorization:`Bearer ${token}` }, body: JSON.stringify(data)});
+      if(res.ok){ this.reset(); adminLoadProducts(); }
+    };
   </script>
 
 </body>
