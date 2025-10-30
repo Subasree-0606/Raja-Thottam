@@ -19,6 +19,8 @@ mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/rajathottam
 app.get('/', (req, res) => res.json({ message: 'Raja Thottam Backend API' }));
 app.use('/api/products', require('./routes/productRoutes'));
 app.use('/api/guides', require('./routes/guideRoutes'));
+app.use('/api/auth', require('./routes/authRoutes'));
+app.use('/api/orders', require('./routes/orderRoutes'));
 // Mount API endpoint files as they are built:
 // app.use('/api/auth', require('./routes/authRoutes'));
 // ... etc.
