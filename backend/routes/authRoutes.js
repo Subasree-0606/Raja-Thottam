@@ -7,14 +7,14 @@ const auth = require('../utils/authMiddleware');
 
 // POST /api/auth/register
 router.post('/register', async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, phone, address } = req.body;
   if (!name || !email || !password) return res.status(400).json({ error: 'Missing fields' });
   const exists = await User.findOne({ email });
   if (exists) return res.status(409).json({ error: 'Email already registered' });
   const passwordHash = await bcrypt.hash(password, 10);
-  const user = await User.create({ name, email, passwordHash });
+  const user = await User.create({ name, email, passwordHash, phone, address });
   const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET || 'devsecret', { expiresIn: '7d' });
-  res.json({ token, user: { id: user._id, name: user.name, email: user.email } });
+  res.json({ token, user: { id: user._id, name: user.name, email: user.email, phone: user.phone, address: user.address } });
 });
 
 // POST /api/auth/login
@@ -25,12 +25,12 @@ router.post('/login', async (req, res) => {
   const ok = await bcrypt.compare(password, user.passwordHash);
   if (!ok) return res.status(401).json({ error: 'Invalid credentials' });
   const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET || 'devsecret', { expiresIn: '7d' });
-  res.json({ token, user: { id: user._id, name: user.name, email: user.email } });
+  res.json({ token, user: { id: user._id, name: user.name, email: user.email, phone: user.phone, address: user.address } });
 });
 
 // GET /api/auth/me
 router.get('/me', auth, async (req, res) => {
-  const user = await User.findById(req.userId).select('name email createdAt');
+  const user = await User.findById(req.userId).select('name email phone address createdAt');
   res.json({ user });
 });
 

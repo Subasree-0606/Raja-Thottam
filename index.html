@@ -242,6 +242,8 @@
         <form id="register-form" class="space-y-3">
           <input name="name" class="border rounded w-full px-3 py-2" placeholder="Name" required>
           <input name="email" type="email" class="border rounded w-full px-3 py-2" placeholder="Email" required>
+          <input name="phone" class="border rounded w-full px-3 py-2" placeholder="Phone No.">
+          <textarea name="address" class="border rounded w-full px-3 py-2" placeholder="Address"></textarea>
           <input name="password" type="password" class="border rounded w-full px-3 py-2" placeholder="Password" required>
           <button class="bg-primary text-white px-6 py-2 rounded">Create Account</button>
         </form>
@@ -917,7 +919,10 @@
       try{
         const res = await fetch(`${BASE_API}/api/auth/me`,{ headers:{ Authorization:`Bearer ${token}` }});
         const json = await res.json();
-        if(json.user){ document.getElementById('account-info').innerText = `Logged in as ${json.user.name} (${json.user.email})`; }
+        if(json.user){
+          const u = json.user;
+          document.getElementById('account-info').innerHTML = `Logged in as <strong>${u.name}</strong> (${u.email})<div class=\"text-sm text-primary/80 mt-1\">${u.phone?('Phone: '+u.phone+' • '):''}${u.address?('Address: '+u.address):''}</div>`;
+        }
       }catch(e){ document.getElementById('account-info').innerText = 'Not logged in.'; }
     }
     document.getElementById('logout-btn').onclick = ()=>{ setToken(''); fetchMe(); };
