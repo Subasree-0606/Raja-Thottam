@@ -615,7 +615,7 @@
           <h4 class="font-logo font-semibold text-lg mb-1">${p.name}</h4>
           <div class="flex items-center mb-2">
             <span class="font-bold text-xl text-primary">₹${p.price}</span>
-            <span class="ml-auto flex text-accent">${'★'.repeat(p.rating)}${'☆'.repeat(5-p.rating)}</span>
+            <button class="ml-auto text-accent hover:text-[#b88b10] wishlist-btn" title="Add to wishlist"><i class="fa-regular fa-heart"></i></button>
           </div>
           <button class="bg-primary hover:bg-secondary text-white font-semibold rounded-full py-2 mt-2 transition add-to-cart">Add to Cart</button>
         </div>`).join('');
@@ -623,7 +623,7 @@
       // Hook up product quick view open
       grid.querySelectorAll('.bg-white').forEach(card => {
         card.addEventListener('click', function(e) {
-          if (!e.target.classList.contains('add-to-cart')) showQuickView(this.dataset.id);
+          if (!e.target.classList.contains('add-to-cart') && !e.target.closest('.wishlist-btn')) showQuickView(this.dataset.id);
         });
       });
       grid.querySelectorAll('.add-to-cart').forEach(btn => {
@@ -631,6 +631,14 @@
           e.stopPropagation();
           const id = this.closest('[data-id]').dataset.id;
           addToCart(Number(id));
+        });
+      });
+      grid.querySelectorAll('.wishlist-btn').forEach(btn=>{
+        btn.addEventListener('click', function(e){
+          e.stopPropagation();
+          const slug = this.closest('[data-slug]').dataset.slug;
+          toggleWishlist(slug);
+          this.innerHTML = isWished(slug) ? '<i class="fa-solid fa-heart"></i>' : '<i class="fa-regular fa-heart"></i>';
         });
       });
     }
@@ -862,6 +870,7 @@
         grid.querySelectorAll('button').forEach((btn,i)=>{
           btn.onclick=()=>{
             const card = btn.closest('[data-id]');
+            if(btn.classList.contains('wishlist-btn')){ toggleWishlist(card.dataset.slug); return; }
             const id = PRODUCTS.find(pp=>pp.slug===card.dataset.slug)?.id || PRODUCTS[i]?.id;
             if(id) addToCart(id);
           };
@@ -883,10 +892,22 @@
             <img src="${g.image||''}" class="rounded-lg h-44 w-full object-cover mb-3" alt="${g.title}">
             <h3 class="font-bold text-lg mb-1">${g.title}</h3>
             <p class="text-sm text-primary/75 mb-3">${g.summary||''}</p>
-            <a class="text-accent font-semibold" href="#">Read More</a>
+            <a class="text-accent font-semibold" href="#/care-guides/${g.slug}">Read More</a>
           </article>
         `).join('');
       }catch(e){/* ignore */}
+    }
+
+    async function renderGuideDetail(slug){
+      try{
+        const res = await fetch(`${BASE_API}/api/guides/${slug}`);
+        const g = await res.json();
+        hideAllPages();
+        const sec = document.getElementById('page-care-guide-detail');
+        sec.innerHTML = `<div class=\"max-w-3xl mx-auto px-5 py-14\"><img src=\"${g.image||''}\" class=\"rounded-xl w-full h-64 object-cover mb-4\"><h1 class=\"font-logo text-3xl mb-2\">${g.title}</h1><div class=\"text-primary/80\">${(g.content||'').replace(/\n/g,'<br>')}</div></div>`;
+        sec.classList.remove('hidden');
+        window.scrollTo({top:0,behavior:'smooth'});
+      }catch(e){ /* ignore */ }
     }
 
     // Account: login/register/me
@@ -997,6 +1018,11 @@
         window.scrollTo({top:0,behavior:'smooth'});
         return;
       }
+      if (hash.startsWith('#/care-guides/')) {
+        const slug = decodeURIComponent(hash.replace('#/care-guides/',''));
+        await renderGuideDetail(slug);
+        return;
+      }
       // generic routes
       const pageId = ROUTES[hash] || 'page-home';
       hideAllPages();
@@ -1005,7 +1031,8 @@
       if (pageId==='page-shop') renderShop(1);
       if (pageId==='page-cart') renderPageCart();
       if (pageId==='page-care-guides') renderGuides();
-      if (pageId==='page-account') { fetchMe(); renderMyOrders(); }
+      if (pageId==='page-account') { fetchMe(); renderMyOrders(); renderWishlistInAccount(); }
+      if (pageId==='page-checkout') { if(!getToken()){ alert('Please login to checkout.'); location.hash = '#/login'; return; } }
       window.scrollTo({top:0,behavior:'smooth'});
     }
     window.addEventListener('hashchange', router);
@@ -1026,6 +1053,24 @@
         ].join('');
         wrap.innerHTML = html;
       }catch(e){ /* ignore */ }
+    }
+
+    // Wishlist (local)
+    const WISHLIST_KEY = 'rt_wishlist';
+    function getWishlist(){ try { return JSON.parse(localStorage.getItem(WISHLIST_KEY)||'[]'); } catch(e){ return []; } }
+    function saveWishlist(arr){ localStorage.setItem(WISHLIST_KEY, JSON.stringify(arr)); }
+    function isWished(slug){ return getWishlist().includes(slug); }
+    function toggleWishlist(slug){ const wl = getWishlist(); const i = wl.indexOf(slug); if(i>=0) wl.splice(i,1); else wl.push(slug); saveWishlist(wl); renderWishlistInAccount(); }
+    function renderWishlistInAccount(){
+      const wl = getWishlist();
+      const list = PRODUCTS.filter(p=>wl.includes(p.slug));
+      const wrap = document.getElementById('account-info');
+      if(!wrap) return;
+      const existing = wrap.innerHTML;
+      const block = `<div class="mt-6"><div class="font-semibold mb-2">My Wishlist</div>${list.length? list.map(p=>`<div class=\"flex justify-between items-center bg-white rounded shadow p-3 mb-2\"><span>${p.name}</span><button class=\"text-xs border px-3 py-1 rounded\" onclick=\"addToCart(${p.id})\">Add to Cart</button></div>`).join('') : '<div class="text-sm text-primary/70">No items yet.</div>'}</div>`;
+      // Preserve first line (account info) and append wishlist
+      const firstLine = existing.split('<div class="mt-4">')[0];
+      wrap.innerHTML = firstLine + block;
     }
   </script>
 
